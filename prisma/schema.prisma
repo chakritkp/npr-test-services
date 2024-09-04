@@ -12,3 +12,26 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Category_sub_level_1 {
+  name                String                 @id @unique
+  sub_level_2_id_list Category_sub_level_2[] @relation("SubLevel1ToSubLevel2")
+  desc                String?
+  Product Product[]
+}
+
+model Category_sub_level_2 {
+  name   String                 @id @unique
+  desc   String?
+  parent Category_sub_level_1[] @relation("SubLevel1ToSubLevel2")
+}
+
+model Product {
+  name                      String               @id @unique
+  category_sub_level_1_name String
+  category_sub_level_1      Category_sub_level_1 @relation(fields: [category_sub_level_1_name], references: [name])
+  desc                      String?
+  amount                    Int
+  price                     Float
+  cost_price                Float
+}
