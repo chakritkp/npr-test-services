@@ -25,7 +25,7 @@ type ProductsDto {
   amount: Int!
   price: Float!
   cost_price: Float!
-  desc: String!
+  desc: String
 }
 
 type Meta {

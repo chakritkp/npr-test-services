@@ -29,7 +29,7 @@ export class ProductsDto {
     @Field(() => Float)
     cost_price: number;
 
-    @Field(() => String)
-    desc: string;
+    @Field(() => String, { nullable: true })
+    desc?: string;
 
 }
