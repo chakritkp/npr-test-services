@@ -2,11 +2,69 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type ProductDto {
+type ResponseDto {
+  status: Int!
+  message: String!
+}
+
+type Category2Dto {
   name: String!
-  decs: String!
+}
+
+type Category1Dto {
+  name: String!
+  sub_level_2_id_list: [Category2Dto!]
+}
+
+type ProductsDto {
+  products_id: Int!
+  name: String!
+  category_sub_level_1: String!
+  category_1: Category1Dto!
+  category_sub_level_2: [Category2Dto!]!
+  amount: Int!
+  price: Float!
+  cost_price: Float!
+  desc: String!
+}
+
+type Meta {
+  count: Int!
+}
+
+type ProductsResponseDto {
+  data: [ProductsDto!]!
+  meta: Meta!
 }
 
 type Query {
-  getProducts: [ProductDto!]!
+  getProducts: ProductsResponseDto!
+  getProduct(id: Float!): ProductsDto!
+  getCategory1: [Category1Dto!]!
+}
+
+type Mutation {
+  createProducts(input: CreateProductsInput!): ResponseDto!
+  updateProducts(id: Float!, input: UpdateProductsInput!): ResponseDto!
+  deleteProducts(id: Float!): ResponseDto!
+}
+
+input CreateProductsInput {
+  name: String!
+  category_sub_level_1: String!
+  category_sub_level_2: [String!]
+  amount: Int!
+  price: Float!
+  cost_price: Float!
+  desc: String
+}
+
+input UpdateProductsInput {
+  name: String
+  category_sub_level_1: String
+  category_sub_level_2: [String!]
+  amount: Int
+  price: Float
+  cost_price: Float
+  desc: String
 }

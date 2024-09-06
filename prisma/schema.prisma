@@ -15,23 +15,27 @@ datasource db {
 
 model Category_sub_level_1 {
   name                String                 @id @unique
-  sub_level_2_id_list Category_sub_level_2[] @relation("SubLevel1ToSubLevel2")
   desc                String?
-  Product Product[]
+  sub_level_2_id_list Category_sub_level_2[] @relation("SubLevel1ToSubLevel2")
+  Products            Products[]
 }
 
 model Category_sub_level_2 {
-  name   String                 @id @unique
-  desc   String?
-  parent Category_sub_level_1[] @relation("SubLevel1ToSubLevel2")
+  name       String                 @id @unique
+  desc       String?
+  category_1 Category_sub_level_1[] @relation("SubLevel1ToSubLevel2")
 }
 
-model Product {
-  name                      String               @id @unique
-  category_sub_level_1_name String
-  category_sub_level_1      Category_sub_level_1 @relation(fields: [category_sub_level_1_name], references: [name])
-  desc                      String?
-  amount                    Int
-  price                     Float
-  cost_price                Float
+model Products {
+  products_id          Int                  @id @default(autoincrement())
+  name                 String               @unique
+  category_sub_level_1 String
+  amount               Int
+  price                Float
+  cost_price           Float
+  desc                 String?
+  is_Active            Boolean              @default(true)
+  created_date         DateTime             @default(now())
+  updated_date         DateTime             @updatedAt
+  category_1           Category_sub_level_1 @relation(fields: [category_sub_level_1], references: [name])
 }
